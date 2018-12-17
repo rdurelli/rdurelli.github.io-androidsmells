@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>An Empirical Catalog of Code Smells for the Presentation Layer of Android Apps.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/resume.min.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Durelli</span>
+        <span class="d-none d-lg-block">
+
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">Paper info.</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#codesmells">Component Smells</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#resourcesmells">Resource Smells</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid p-0">
+
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
+        <div class="my-auto">
+          <h2 class="mb-0">An Empirical Catalog of Code Smells for the Presentation Layer of Android Apps
+          </h2>
+          <div class="subheading mb-5">Authors: Suelen Goulart Carvalho, Maurício Aniche, Júlio Veríssimo, Rafael S. Durelli, and Marco Aurélio Gerosa ·<p>
+          </div>
+          <p class="lead mb-5" align="justify">Developers frequently seek code to be refactored, searching, for example, for code smells.
+            Although the literature presents a variety of code smells, such as <i><b>God Class</b></i> and <i><b>Long Method</i></b>,
+            different technologies are not taken into account. When it comes to the presentation layer,
+            Android apps are a special kind of software: they need to implement specific architectural decisions from the Android platform itself (such as modeling Activities, Fragments, and Listeners to events)
+            as well as deal with and integrate different types of resources (such as layouts and images).
+            We investigate what code smells developers perceive in the presentation layer of Android apps.
+            Through a three-step study that involved 300 Android developers, we devised 20 specific code smells and collected the developers’ perceptions of their frequency and importance. We implemented a tool that automates the identification of 80% (16/20) of
+            these smells. To validate we carried out an empirical study over the prevalence of these smells.
+            The study was performed involving 619 open-source apps from F-Droid.
+            Our findings suggest that: 1) there exist code smells specific to the presentation layer of Android apps; 2) developers consider these code smells to be of high importance and frequent occurrence;
+            and 3) developers perceive classes affected by the smells as problematic when compared to clean classes.
+            These results may help practitioners and tool developers while searching for potentially problematic pieces of code in Android Apps.</p>
+        </div>
+      </section>
+
+      <hr class="m-0">
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="codesmells">
+        <div class="my-auto">
+          <h2 class="mb-5">Component Smells.</h2>
+
+          <div class="subheading mb-5">Nine Component Smells are presented here.<p></div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Brain UI Component</h3>
+              <p align="justify"><i><b>Activities</i></b>, <i><b>Fragments</i></b>, and <i><b>Adapters</i></b> should be responsible for presenting, interacting, and updating the UI only.
+                In other words, they should be responsible for any view logic that the app might have.
+                Executing any business logic, on the other hand, should happen somewhere else.
+                The UI layer should not contain details that are related to the domain.
+                The existence of code related to business logic, I/O operations, conversion of data, or static fields in these elements are signs of code smell.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">Only code related to the UI in <i><b>Activities</b></i>, <i><b>Fragments</b></i>, <i><b>Adapters</b></i>,
+                  and <i><b>Listeners</b></i>.
+                  Break all business logic into two or more classes.</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Coupled UI Component</h3>
+              <p align="justify"><i><b>Fragments</b></i>, <i><b>Adapters</i></b>, and <i><b>Listeners</i></b>,
+                in order to be reused, should not have direct reference to who uses them.
+                The existence of direct reference to <i><b>Activities</i></b> or <i><b>Fragments</i></b> in these elements is an evidence of code smell.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Suspicious Behavior</h3>
+              <p align="justify"><i><b>Activities</i></b>, <i><b>Fragments</i></b>, and <i><b>Adapters</i></b> should not contain, in its source code, the implementation of their event handlers.
+                First, event handling code, when embedded into one of aforementioned components, is implemented through anonymous or internal classes.
+                As the interfaces that these event handlers need to implement are often complex, the source code of the <i><b>Activities</i></b>, <i><b>Fragments</i></b>, and <i><b>Adapters</i></b> becomes less readable.
+                Second, an event handler often makes use of the business rules and the domain model of the app.
+                A less attentive developer may then write these business rules directly into the event handler (which then leads us to a possible Brain UI Component smell).
+                The use of anonymous classes or internal classes to implement Listeners to respond to user events is a sign of code smell.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Fool Adapter</h3>
+              <p align="justify">This smell is present when <i><b>Adapters</i></b> do not reuse instances of the views that represent the fields that will be populated for each item of a collection by means of the <i><b>View Holder</i></b> pattern.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Absence of an Architecture</h3>
+              <p align="justify">This smell emerges when one cannot easily identify how the components are organized.
+                Developers cannot identify whether the application makes use of <i><b>Model View Controller (MVC)</i></b>, <i><b>Model View Presenter (MVP)</i></b>, or <i><b>Model View ViewModel (MVVM)</i></b>.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Excessive Use of Fragments</h3>
+              <p align="justify">This smell emerges when <i><b>Fragments</i></b> are used without an explicit need.
+                Examples are applications that do not (need not to) support tablets, or when <i><b>Fragments</i></b> are used in only a single screen of the app.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">UI Component Doing I/O</h3>
+              <p align="justify"><i><b>Activities</i></b>, <i><b>Fragments</i></b>, and <i><b>Adapters</i></b> performing I/O operations, such as database and file access, cause this smell.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">No Use of Fragments</h3>
+              <p align="justify"><i><b>Fragments</i></b> can decouple UI with behavior pieces.
+                The non use of <i><b>Fragments</i></b> can be a smell in apps that are visually rich.
+                Such apps contain a high number of different behaviors, animations, and events to handle.
+                If all the implementation complexity relies on a single <i><b>Activity</i></b>, for example,
+                this class will be highly complex and hard to understand.
+                Moreover, visually rich apps are also often responsive, i.e., have different UIs for different screen sizes.
+                In this case, not using <i><b>Fragments</i></b> will hinder code reuse.
+                This code smell emerges when view components, e.g., <i><b>EditTexts</i></b> or <i><b>Spinners</i></b>, are directly used by an <i><b>Activity</i></b> instead of <i><b>Fragment</i></b>.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Flex Adapter</h3>
+              <p align="justify"><i><b>Adapters</i></b> should be responsible for populating a view from a single object.
+                The code smell emerges when <i><b>Adapters</i></b> contain business logic and make business decisions.
+                As we discussed in the <i><b>Brain UI Component smell</i></b>, UI logic and business rules should be apart from each other.</p>
+                <div class="subheading mb-3">Refactoring suggestion:</div>
+                <p align="justify">TODO</p>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <hr class="m-0">
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="resourcesmells">
+        <div class="my-auto">
+          <h2 class="mb-5">Resource Smells</h2>
+
+          <div class="subheading mb-5">Here are presented 11 Resource Smells.<p></div>
+
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">No Naming Pattern</h3>
+                <p align="justify">This smell happens when resources (<i><b>layout</i></b>, <i><b>string</i></b>, <i><b>style</i></b>, <i><b>drawables</i></b>) do not
+                  follow a naming pattern.
+                  More specifically, it happens when the file where the resource is located and its internal name (i.e., how the resource is called inside the source code) are different.
+                  These different names are a cause of confusion among developers.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Missing Image</h3>
+                <p align="justify">This code smell happens when the system contains only a single version of its <i><b>.png</i></b>, <i><b>.jpg</i></b>, or <i><b>.gif</i></b> images.
+                  The Android platform requires images to be available in more than one size or resolution to perform optimizations.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Magic Resource</h3>
+                <p align="justify">A smell that results when resources (e.g., <i><b>layout</i></b>, <i><b>string</i></b>, and <i><b>style</i></b>) are hard-coded instead of pointing to an existing resource.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Deep Nested Layout</h3>
+                <p align="justify">Deep nesting when constructing layout resources was considered a code smell.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Unnecessary Image</h3>
+                <p align="justify">Android has resources that can replace images.
+                  The smell emerges when the system has images with, for example,
+                  pure solid colors or gradients, which could be replaced by Android’s native <i><b>shapes</i></b>.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Long or Repeated Layout</h3>
+                <p align="justify">The code smell emerges when long or duplicated <i><b>layout</i></b> resources (instead of good reuse) occur in the source code.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">God Style Resource</h3>
+                <p align="justify">Long <i><b>style</i></b> resources. Symptoms of this smell happen when all styles are defined in the same <i><b>styles.xml</i></b>.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">God String Resource</h3>
+                <p align="justify">Long <i><b>string</i></b> resources.
+                  Developers should separate their string resources according to some rule, e.g., one string resource per screen.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Inappropriate String Reuse</h3>
+                <p align="justify">Developers reuse strings among the different UIs of the application.
+                  For example, the string “Name” might appear in many parts of the app; thus, developers write this string only once in a string resource file, and reuse it whenever they need it.
+                  However, the smell happens when developers reuse the same <i><b>string</i></b> in different parts of the system just because the string is coincidentally the same, and not because they represent the same thing in the UI.
+                  For example, in one part of the app, “name” might refer to the name of the user, whereas in another part of the app, “name” might refer to the name of the user’s favourite band.
+                  Reusing strings just because of their similarity might lead to two problems:
+                  First, if the developer decides to change the string, s/he needs to be aware that the changes will be reflected throughout the entire application (and might not be what s/he wants).
+                  Second, when adding support for multiple languages, a language might need two different words to express what another language might need just one (thus, making internationalization harder).</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Duplicate Style Attributes</h3>
+                <p align="justify">Android developers often choose to define the style of an UI element directly into the layout file.
+                  However, this might lead to unnecessary duplication (e.g., the same complex style appears in different components).
+                  The existence of duplicated style definitions in different components is an indication of this code smell.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+              <div class="resume-content mr-auto">
+                <h3 class="mb-0">Hidden Listener</h3>
+                <p align="justify">Layout resources should only be responsible for presenting data.
+                  The smell appears when these resources also configure the listener that will respond to its events, such as <i><b>onClick</i></b>.
+                  Such decisions make it harder for developers to identify which listeners are used.</p>
+                  <div class="subheading mb-3">Refactoring suggestion:</div>
+                  <p align="justify">TODO</p>
+              </div>
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/resume.min.js"></script>
+
+  </body>
+
+</html>
